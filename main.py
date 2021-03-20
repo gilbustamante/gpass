@@ -1,9 +1,15 @@
-"""Convert password strings to base64"""
-import base64
+"""Generates passwords"""
+import random
+import string
 
-TEST_STRING = b'Thisbemypassword'
+def generate_pass(length):
+    """Generate password with given length"""
+    try:
+        length = int(length)
+    except ValueError:
+        print('You must input a number!')
+    chars = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choices(chars, k=length))
+    return password
 
-new_b64_string = base64.b64encode(TEST_STRING)
-decoded = base64.b64decode(new_b64_string)
-
-print(decoded.decode("utf-8"))
+print(generate_pass(20))
