@@ -3,6 +3,7 @@ import random
 import string
 import argparse
 
+
 def setup_argparse():
     """Setup and parse arguments"""
     parser = argparse.ArgumentParser(
@@ -13,12 +14,19 @@ def setup_argparse():
                         metavar="Password length",
                         dest="length",
                         type=int,
+                        default=10,
                         help="The desired length of your password.")
+    parser.add_argument("-a",
+                        action="store_true",
+                        dest="alphanumeric",
+                        help="Generates a password containing only \
+                        alphanumeric values")
     args = parser.parse_args()
     return args
 
+
 def generate_pass(length):
-    """Generate password with given length"""
+    """Generate default password with given length"""
     try:
         length = int(length)
     except ValueError:
@@ -31,6 +39,22 @@ def generate_pass(length):
     password = ''.join(random.choices(chars, k=length))
     return password
 
+
+def generate_alphanumeric_pass(length):
+    """Generate alphanumeric password with given length"""
+    try:
+        length = int(length)
+    except ValueError:
+        print('You must input a number!')
+        return 1
+    chars = string.ascii_letters + string.digits
+    password = ''.join(random.choices(chars, k=length))
+    return password
+
+
 if __name__ == '__main__':
-    args = setup_argparse()
-    print(generate_pass(args.length))
+    given_args = setup_argparse()
+    if given_args.alphanumeric:
+        print(generate_alphanumeric_pass(given_args.length))
+    else:
+        print(generate_pass(given_args.length))
