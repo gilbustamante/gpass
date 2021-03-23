@@ -27,27 +27,23 @@ def setup_argparse():
 
 def generate_pass(length):
     """Generate default password with given length"""
-    try:
-        length = int(length)
-    except ValueError:
-        print('You must input a number!')
-        return 1
     chars = (string.ascii_letters +
              string.digits +
              string.punctuation +
              ' ')
+    if length < 0:
+        print('Password length (-l) must be greater than 0')
+        return None
     password = ''.join(random.choices(chars, k=length))
     return password
 
 
 def generate_alphanumeric_pass(length):
     """Generate alphanumeric password with given length"""
-    try:
-        length = int(length)
-    except ValueError:
-        print('You must input a number!')
-        return 1
     chars = string.ascii_letters + string.digits
+    if length < 0:
+        print('Password length (-l) must be greater than 0')
+        return None
     password = ''.join(random.choices(chars, k=length))
     return password
 
